@@ -61,8 +61,8 @@ def edit_image(background_path, foreground_path, output_path, transparency = 0.1
     bg.paste(fg, (0,0),fg)
 
     # Save the result
-    # bg.save(output_path, "JPEG")
-    bg.show()
+    bg.save(output_path, "JPEG")
+    # bg.show()
 
     # Check and delete any extra files
     if extra_file:
@@ -101,8 +101,8 @@ while True:
                                 save_image_from_url(image_url, filename)
                                 edit_image(filename,overlay,"./img/Complete.jpg")
                                 
-                                # media = api.media_upload("./img/Complete.jpg")
-                                # client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
+                                media = api.media_upload("./img/Complete.jpg")
+                                client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
                                 break
                             
 
