@@ -69,7 +69,9 @@ def edit_image(background_path, foreground_path, output_path, transparency = 0.1
         os.remove(new_path)
         os.remove(background_path)
 
-mention_id=1
+with open('mention.txt', 'r') as file:
+    mention_id = int(file.read())
+
 filename="./img/temporary.jpg"
 client_id = client.get_me().data.id
 
@@ -80,7 +82,8 @@ while True:
         for mention in reversed(response.data):
             print("Mention Tweet Found!")
             mention_id=mention.id
-            print(mention_id)
+            with open('sample.txt', 'w') as file:
+                file.write(str(mention_id))
 
             try:
                 if mention.in_reply_to_user_id != client_id:
@@ -113,5 +116,5 @@ while True:
 
        
         
-    time.sleep(15)
+    time.sleep(45)
 
