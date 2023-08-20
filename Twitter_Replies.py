@@ -69,7 +69,7 @@ def edit_image(background_path, foreground_path, output_path, transparency = 0.1
         os.remove(new_path)
         os.remove(background_path)
 
-with open('mentionID.txt', 'r') as file:
+with open('./mentionID.txt', 'r') as file:
     mention_id = int(file.read())
 
 filename="./img/temporary.jpg"
@@ -82,7 +82,7 @@ while True:
         for mention in reversed(response.data):
             print("Mention Tweet Found!")
             mention_id=mention.id
-            with open('mentionID.txt', 'w') as file:
+            with open('./mentionID.txt', 'w') as file:
                 file.write(str(mention_id))
 
             try:
