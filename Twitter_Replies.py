@@ -74,10 +74,12 @@ with open('./mentionID.txt', 'r') as file:
 
 filename="./img/temporary.jpg"
 client_id = client.get_me().data.id
+request_counter=0
 
 while True:
-    response = client.get_users_mentions(client_id, since_id=mention_id,expansions=["author_id","in_reply_to_user_id","referenced_tweets.id.author_id"],user_fields=["id","profile_image_url"])
-
+    response = client.get_users_mentions(client_id, since_id=mention_id,expansions=["author_id","in_reply_to_user_id"],user_fields=["id","profile_image_url"])
+    request_counter+=1
+    print(request_counter)
     if response.data != None:
         for mention in reversed(response.data):
             print("Mention Tweet Found!")
