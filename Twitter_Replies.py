@@ -86,6 +86,8 @@ while True:
             mention_id=mention.id
             with open('./mentionID.txt', 'w') as file:
                 file.write(str(mention_id))
+                print("Mention ID")
+                print(mention_id)
 
             try:
                 if mention.in_reply_to_user_id != client_id:
@@ -118,5 +120,5 @@ while True:
 
        
         
-    time.sleep(45)
+    time.sleep(60)
 
