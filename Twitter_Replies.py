@@ -84,11 +84,13 @@ while True:
         for mention in reversed(response.data):
             print("Mention Tweet Found!")
             mention_id=mention.id
+            print("Mention ID")
+            print(mention_id)
+
             with open('./mentionID.txt', 'w') as file:
                 file.write(str(mention_id))
-                print("Mention ID")
-                print(mention_id)
 
+            
             try:
                 if mention.in_reply_to_user_id != client_id:
                     if mention.in_reply_to_user_id:
