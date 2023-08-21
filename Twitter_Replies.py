@@ -14,8 +14,6 @@ bearer_token=os.environ.get("BEARER_TOKEN")
 access_token=os.environ.get("ACCESS_TOKEN")
 access_token_secret=os.environ.get("ACCESS_TOKEN_SECRET")
 
-print(api_key)
-print(api_secret)
 auth = tweepy.OAuthHandler(api_key,api_secret)
 auth.set_access_token(access_token,access_token_secret)
 client = tweepy.Client(bearer_token, api_key,api_secret,access_token,access_token_secret)
@@ -58,6 +56,11 @@ def edit_image(background_path, foreground_path, output_path, transparency = 0.1
     
 
     # Overlay the foreground onto the background
+    left=(bg.width-400)/2
+    right =(bg.width+400)/2
+    top = (bg.height-400)/2
+    bot = (bg.height+400)/2
+    bg=bg.crop((left,top,right,bot))
     bg.paste(fg, (0,0),fg)
 
     # Save the result
