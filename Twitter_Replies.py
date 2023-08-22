@@ -78,52 +78,53 @@ with open('./mentionID.txt', 'r') as file:
 filename="./img/temporary.jpg"
 client_id = client.get_me().data.id
 request_counter=0
+username_pattern = r"^(?:@[A-Za-z0-9_]+ ?)+\d+$"
 
 while True:
-    # response = client.get_users_mentions(client_id, since_id=mention_id,expansions=["author_id","in_reply_to_user_id"],user_fields=["id","profile_image_url"])
-    # request_counter+=1
-    # print(request_counter)
-    # if response.data != None:
-    #     for mention in reversed(response.data):
-    #         print("Mention Tweet Found!")
-    #         mention_id=mention.id
-    #         print("Mention ID")
-    #         print(mention_id)
+    response = client.get_users_mentions(client_id, since_id=mention_id,expansions=["author_id","in_reply_to_user_id"],user_fields=["id","profile_image_url"])
+    request_counter+=1
+    print(request_counter)
+    if response.data != None:
+        for mention in reversed(response.data):
+            print("Mention Tweet Found!")
+            mention_id=mention.id
+            print("Mention ID")
+            print(mention_id)
 
-    #         with open('./mentionID.txt', 'w') as file:
-    #             file.write(str(mention_id))
+            with open('./mentionID.txt', 'w') as file:
+                file.write(str(mention_id))
 
             
-    #         try:
-    #             if mention.in_reply_to_user_id != client_id:
-    #                 if mention.in_reply_to_user_id:
-
-    #                     label = re.findall(r'(?<!\w)\d+(?!\w)', mention.text)
-    #                     for num in label:
-    #                         if int(num) >0 and int(num)<16:
-                            
-    #                             print("inside")
-
-    #                             caller_profile = api.get_user(user_id=mention.in_reply_to_user_id)
-    #                             image_url = caller_profile.profile_image_url_https.replace('_normal','')
-    #                             print(image_url)
-
-    #                             overlay= "./img/" +num+".jpg"
-    #                         # # Grab Image and edit it.
-    #                             save_image_from_url(image_url, filename)
-    #                             edit_image(filename,overlay,"./img/Complete.jpg")
+            try:
+                if mention.in_reply_to_user_id != client_id:
+                    if mention.in_reply_to_user_id:
+                        if re.match(username_pattern, mention.text):
+                            label = re.findall(r'(?<!\w)\d+(?!\w)', mention.text)
+                            for num in label:
+                                if int(num) >0 and int(num)<16:
                                 
-    #                             media = api.media_upload("./img/Complete.jpg")
-    #                             client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
-    #                             break
+                                    print("inside")
+
+                                    caller_profile = api.get_user(user_id=mention.in_reply_to_user_id)
+                                    image_url = caller_profile.profile_image_url_https.replace('_normal','')
+                                    print(image_url)
+
+                                    overlay= "./img/" +num+".jpg"
+                                # # Grab Image and edit it.
+                                    save_image_from_url(image_url, filename)
+                                    edit_image(filename,overlay,"./img/Complete.jpg")
+                                    
+                                    media = api.media_upload("./img/Complete.jpg")
+                                    client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
+                                    break
                             
 
-    #         except Exception as error:
-    #             print("Error Occurred")
-    #             print(error)
+            except Exception as error:
+                print("Error Occurred")
+                print(error)
             
 
        
         
-    time.sleep(3000)
+    time.sleep(60)
 
