@@ -95,33 +95,33 @@ while True:
                 file.write(str(mention_id))
 
             
-            try:
-                if mention.in_reply_to_user_id != client_id:
-                    if mention.in_reply_to_user_id:
-                        if re.match(username_pattern, mention.text):
-                            label = re.findall(r'(?<!\w)\d+(?!\w)', mention.text)
-                            for num in label:
-                                if int(num) >0 and int(num)<16:
+            # try:
+            if mention.in_reply_to_user_id != client_id:
+                if mention.in_reply_to_user_id:
+                    if re.match(username_pattern, mention.text):
+                        label = re.findall(r'(?<!\w)\d+(?!\w)', mention.text)
+                        for num in label:
+                            if int(num) >0 and int(num)<16:
+                            
+                                print("inside")
+
+                                caller_profile = api.get_user(user_id=mention.in_reply_to_user_id)
+                                image_url = caller_profile.profile_image_url_https.replace('_normal','')
+                                print(image_url)
+
+                                overlay= "./img/" +num+".jpg"
+                            # # Grab Image and edit it.
+                                save_image_from_url(image_url, filename)
+                                edit_image(filename,overlay,"./img/Complete.jpg")
                                 
-                                    print("inside")
-
-                                    caller_profile = api.get_user(user_id=mention.in_reply_to_user_id)
-                                    image_url = caller_profile.profile_image_url_https.replace('_normal','')
-                                    print(image_url)
-
-                                    overlay= "./img/" +num+".jpg"
-                                # # Grab Image and edit it.
-                                    save_image_from_url(image_url, filename)
-                                    edit_image(filename,overlay,"./img/Complete.jpg")
-                                    
-                                    media = api.media_upload("./img/Complete.jpg")
-                                    client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
-                                    break
+                                media = api.media_upload("./img/Complete.jpg")
+                                client.create_tweet(in_reply_to_tweet_id=mention_id, media_ids= [media.media_id])
+                                break
                             
 
-            except Exception as error:
-                print("Error Occurred")
-                print(error)
+            # except Exception as error:
+            #     print("Error Occurred")
+            #     print(error)
             
 
        
