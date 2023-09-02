@@ -126,5 +126,5 @@ while True:
 
        
         
-    time.sleep(60)
+    time.sleep(90)
 
